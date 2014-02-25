@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+<meta name="format-detection" content="telephone=no">
+<title>Great South Coast Medicare Local</title>
+<!-- CSS:LIB -->
+<link rel="stylesheet" href="lib/jqm/jquery.mobile-1.2.0.min.css" />
+<!-- CSS:FONT -->
+<link rel="stylesheet" href="lib/font/helvetica-round-webfont/font.css" />
+<link rel="stylesheet" href="lib/font/open-sans-webfont/font.css" />
+<!-- CSS:ICON -->
+<link rel="stylesheet" href="lib/icon/fwicon/icon.css" />
+<!-- CSS:APP -->
+<link rel="stylesheet" href="lib/css/app.css" />
+<!-- JS:LIB -->
+<script src="phonegap.js"></script>
+<script src="lib/js/jquery-1.8.2.min.js"></script>
+<script src="lib/js/jqm.mobileinit.js"></script>
+<script src="lib/jqm/jquery.mobile-1.2.0.min.js"></script>
+<!-- JS:API -->
+<script src="http://maps.google.com/maps/api/js?key=AIzaSyB1VbqzAEvQo8iPx2dt4jcILuMKrqJZnrs&sensor=true"></script>
+<script src="lib/js/markerwithlabel.js"></script>
+</head>
+<body>
+
+<!-- SPLASH -->
+<div data-role="page" data-title="Splash" id="pgSplash" class="page">
+	<div data-role="content">
+		<div class="branding">
+			<h1 class="ir">Great South Coast Medicare Local</h1>
+			<h2 class="ir">Connecting health to meet local needs</h2>
+		</div>
+	</div>
+</div><!-- /SPLASH -->
+
+<!-- HOME -->
+<div data-role="page" data-title="Home" id="pgHome" class="page">
+	<div data-role="content">
+		<div class="branding">
+			<h1 class="ir">Great South Coast Medicare Local</h1>
+			<h2 class="ir">Connecting health to meet local needs</h2>
+			<a class="link" href="http://www.gscml.com.au" target="_blank">www.gscml.com.au</a>
+			<a id="btnAfterHours" href="#pgAfterHours" data-transition="slideup">
+				<span class="label">After Hours</span>
+				<span class="sublabel">Medical Assistance</span>
+				<i class="icon fwicon-chevron-right"></i>
+			</a>
+		</div>
+	</div>
+	<div data-role="footer" data-position="fixed">
+		<div class="nav">
+			<ul class="clearfix">
+				<li class="navItem" id="navSearch">
+					<a href="#pgSearch" data-transition="pop">
+						<i class="icon fwicon-search"></i>
+						<span class="label">Search</span>
+					</a>
+				</li>
+				<li class="navItem" id="navMap">
+					<a href="#pgMap" data-transition="pop">
+						<i class="icon fwicon-map"></i>
+						<span class="label">Map</span>
+					</a>
+				</li>
+				<li class="navItem" id="navBrowse">
+					<a href="#pgBrowse" data-transition="pop">
+						<i class="icon fwicon-doc-binded"></i>
+						<span class="label">Browse</span>
+					</a>
+				</li>
+				<li class="navItem" id="navInfo">
+					<a href="#pgInfo" data-transition="slideup">
+						<i class="icon fwicon-info-inset"></i>
+						<span class="label">Information</span>
+					</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div><!-- /HOME -->
+
+<!-- SEARCH -->
+<div data-role="page" data-title="Search" id="pgSearch" class="page">
+	<div data-role="header" data-position="fixed">
+		<h3>Search</h3>
+		<a data-rel="back" href="" class="ui-btn-left btnBack"><i class="icon fwicon-chevron-left"></i></a>
+		<a data-transition="pop" data-direction="reverse" href="#pgHome" class="ui-btn-right btnHome"><i class="icon fwicon-home"></i></a>
+	</div>
+	<div data-role="content" class="withPadding">
+		<form id="formSearch">
+			<div data-role="fieldcontain">
+				<label for="formServiceType">Service Type</label>
+				<select id="formServiceType" name="formServiceType">
+					<!-- <option value="Type1">Type1</option> -->
+				</select>
+			</div>
+			<div data-role="fieldcontain">
+				<label for="formLocation">Location</label>
+				<select id="formLocation" name="formLocation">
+					<!-- <option value="Type1">Type1</option> -->
+				</select>
+			</div>
+			<div data-role="fieldcontain">
+				<label for="formHours">Hours</label>
+				<select id="formHours" name="formHours">
+					<!-- <option value="Type1">Type1</option> -->
+				</select>
+			</div>
+			<div data-role="fieldcontain">
+				<label for="formKeywords">Keywords</label>
+				<input name="formKeywords" id="formKeywords" placeholder="" value="" type="text" />
+			</div>
+			<input id="btnSubmit" type="submit" value="Search" />
+		</form>
+	</div>
+</div><!-- /SEARCH -->
+
+<!-- MAP -->
+<div data-role="page" data-title="Map" id="pgMap" class="page">
+	<div data-role="header" data-position="fixed">
+		<h3>Map</h3>
+		<a data-rel="back" href="" class="ui-btn-left btnBack"><i class="icon fwicon-chevron-left"></i></a>
+		<a data-transition="pop" data-direction="reverse" href="#pgHome" class="ui-btn-right btnHome"><i class="icon fwicon-home"></i></a>
+	</div>
+	<div data-role="content" class="noPadding">
+		<!-- MAP CANVAS -->
+		<div id="mapCanvas"></div>
+	</div>
+</div><!-- /MAP -->
+
+<!-- BROWSE -->
+<div data-role="page" data-title="Browse" id="pgBrowse" class="page">
+	<div data-role="header" data-position="fixed">
+		<h3>Browse</h3>
+		<a data-rel="back" href="" class="ui-btn-left btnBack"><i class="icon fwicon-chevron-left"></i></a>
+		<a data-transition="pop" data-direction="reverse" href="#pgHome" class="ui-btn-right btnHome"><i class="icon fwicon-home"></i></a>
+	</div>
+	<div data-role="content" class="noPadding">
+		<ul id="browseResult">
+			<!--
+			<li data-icon="false">
+				<a href="#pgBranch" data-transition="slidefade">
+					<span class="suburb">{suburb}</span>
+					<span class="name">{name}</span>
+					<span class="address">{streetaddress}</span>
+					<span class="status">{status}</span>
+					<i class="icon fwicon-chevron-right"></i>
+				</a>
+			</li>
+			-->
+		</ul>
+	</div>
+</div><!-- /BROWSE -->
+
+<!-- BRANCH -->
+<div data-role="page" data-title="Service Details" id="pgBranch" class="page">
+	<div data-role="header" data-position="fixed">
+		<h3>Branch</h3>
+		<a data-rel="back" href="" class="ui-btn-left btnBack"><i class="icon fwicon-chevron-left"></i></a>
+		<a data-transition="pop" data-direction="reverse" href="#pgHome" class="ui-btn-right btnHome"><i class="icon fwicon-home"></i></a>
+	</div>
+	<div data-role="content" class="withPadding">
+		<section id="secPhone">
+			<h3 class="heading"><span class="title">Phone</span><a href="">{phone}</a></h3>
+		</section>
+		<section id="secEmail">
+			<h3 class="heading"><span class="title">Email</span><a href="">{email}</a></h3>
+		</section>
+		<section id="secWeb">
+			<h3 class="heading"><span class="title">Web</span><a href="">{website}</a></h3>
+		</section>
+		<section id="secDetails">
+			<h3 class="heading">{name}</h3>
+			<p class="address">{address}</p>
+		</section>
+		<div>
+			<a id="statusOpen" class="btnBgAlert" href="#pgAfterHours" data-transition="slideup"><span class="label">Currently Closed<br>Call the Triage Nurse</span></a>
+			<div id="statusAvail" class="boxBgAlert"><span class="label">GP Currently Unavailable</span></div>
+		</div>
+		<div class="ui-grid-a">
+			<div class="ui-block-a">
+				<a id="btnAddContact" class="btnBg" href="#"><i class="icon fwicon-contact-add"></i><span class="label">Add to Contacts</span></a>
+			</div>
+			<div class="ui-block-b">
+				<a id="btnViewMap" class="btnBg" data-focus="1" href="#pgMap"><i class="icon fwicon-location"></i><span class="label">View <br>on Map</span></a>
+			</div>
+		</div>
+		<section id="secHours">
+			<h3 class="heading">Hours of Operation</h3>
+			<p class="entry mon">
+				<span class="day">Monday:</span>
+				<span class="hours">{mon}</span>
+			</p>
+			<p class="entry tue">
+				<span class="day">Tuesday:</span>
+				<span class="hours">{tue}</span>
+			</p>
+			<p class="entry wed">
+				<span class="day">Wednesday:</span>
+				<span class="hours">{wed}</span>
+			</p>
+			<p class="entry thu">
+				<span class="day">Thursday:</span>
+				<span class="hours">{thu}</span>
+			</p>
+			<p class="entry fri">
+				<span class="day">Friday:</span>
+				<span class="hours">{fri}</span>
+			</p>
+			<p class="entry sat">
+				<span class="day">Saturday:</span>
+				<span class="hours">{sat}</span>
+			</p>
+			<p class="entry sun">
+				<span class="day">Sunday:</span>
+				<span class="hours">{sun}</span>
+			</p>
+		</section>
+		<section id="secNotes">
+			<h3 class="heading">Notes</h3>
+			<p>{notes}</p>
+		</section>
+	</div>
+</div>
+
+<!-- AFTERHOURS -->
+<div data-role="page" data-title="After Hours Medical Assistance" id="pgAfterHours" class="page">
+	<div data-role="header" data-position="fixed">
+		<h3>After Hours</h3>
+		<a data-rel="back" href="" class="ui-btn-left btnBack"><i class="icon fwicon-chevron-left"></i></a>
+		<a data-transition="slideup" data-direction="reverse" href="#pgHome" class="ui-btn-right btnHome"><i class="icon fwicon-home"></i></a>
+	</div>
+	<div data-role="content" class="withPadding">
+		<div id="secNurseOnCall">
+			<a href="tel:+611300606024" id="btnCallNurse" class="btnCallNurse">
+				<span class="padder">
+					<span class="label">Nurse on Call</span>
+					<span class="sublabel">For medical issues where you are unsure if a doctor is required</span>
+				</span>
+				<span class="tel">Phone <span class="telNum">1300 60 60 24</span></span>
+			</a>
+		</div>
+		<div id="secTriageNurse">
+			<a href="tel:+61395648795" id="btnCallTriageNurse" class="btnCallNurse">
+				<span class="padder">
+					<span class="label">Call the <br>Triage Nurse</span>
+					<span class="sublabel">For medical issues where you are certain that you need to see a doctor</span>
+				</span>
+				<span class="tel">Phone <span class="telNum">9564 8795</span></span>
+			</a>
+		</div>
+		<!-- AREA CALLS -->
+		<section id="area1" class="areaCall comment">
+			<h4>Cobden District Health Services</h4>
+			<p><b>Phone: </b><a href="tel:+61355953100">5595 3100</a></p>
+		</section>
+		<section id="area2" class="areaCall comment">
+			<h4>SWHC: Camperdown Campus</h4>
+			<p><b>Phone: </b><a href="tel:+61355937300">5593 7300</a></p>
+		</section>
+		<section id="area3" class="areaCall comment">
+			<h4>Terang Health Services</h4>
+			<p><b>Phone: </b><a href="tel:+61355920222">5592 0222</a></p>
+		</section>
+		<section id="area4" class="areaCall comment">
+			<h4>Timboon &amp; District Health Care Services</h4>
+			<p><b>Phone: </b><a href="tel:+61355586000">5558 6000</a></p>
+		</section>
+		<section id="area5" class="areaCall comment">
+			<h4>Moyne Health Services: Port Fairy</h4>
+			<p><b>Phone: </b><a href="tel:+61355680100">5568 0100</a></p>
+		</section>
+		<section id="area6" class="areaCall comment">
+			<h4>Casterton Memorial Hospital</h4>
+			<p><b>Phone: </b><a href="tel:+61355542555">5554 2555</a></p>
+		</section>
+		<!-- COMMON CALLS -->
+		<section class="comment">
+			<h4>Hamilton Medical Group</h4>
+			<p><b>Phone: </b><a href="tel:+61355722422">5572 2422</a></p>
+		</section>
+		<section class="comment">
+			<h4>Hopkins Medical Centre</h4>
+			<p><b>Phone: </b><a href="tel:+61355614955">5561 4955</a></p>
+		</section>
+		<section class="comment">
+			<h4>Jamieson Medical Clinic</h4>
+			<p><b>Phone: </b><a href="tel:+61355626533">5562 6533</a></p>
+		</section>
+		<section class="comment">
+			<h4>The Health Spot</h4>
+			<p><b>Phone: </b><a href="tel:+61355624528">5562 4528</a></p>
+		</section>
+		<section class="comment">
+			<h4>Warrnambool Medical Clinic</h4>
+			<p><b>Phone: </b><a href="tel:+61355622766">5562 2766</a></p>
+		</section>
+		<section class="comment">
+			<h4>Cambourne Clinic</h4>
+			<p><b>Phone: </b><a href="tel:+61355612077">5561 2077</a></p>
+		</section>
+	</div>
+</div><!-- /AFTERHOURS -->
+
+<!-- INFO -->
+<div data-role="page" data-title="Information" id="pgInfo" class="page">
+	<div data-role="header" data-position="fixed">
+		<h3>Information</h3>
+		<a data-rel="back" href="" class="ui-btn-left btnBack"><i class="icon fwicon-chevron-left"></i></a>
+		<a data-transition="slideup" data-direction="reverse" href="#pgHome" class="ui-btn-right btnHome"><i class="icon fwicon-home"></i></a>
+	</div>
+	<div data-role="content" class="withPadding">
+		<p>Our vision is to create responsive, accessible, connected health care for our community.</p>
+		<p>We believe that people in our local community should experience the best health care throughout their lives, be that in the community or in hospital.</p>
+		<hr>
+		<p class="notes">
+			<b>GSCML Health Services Finder</b><br>
+			<b>Version:</b> <span id="infoVersion">{version}</span><br>
+			<b>Last Update:</b> <span id="infoLastUpdate">{lastupdate}</span>
+		</p>
+	</div>
+</div><!-- /INFO -->
+
+<!-- JS:APP -->
+<script src="lib/js/app-utils.js"></script>
+<script src="lib/js/app-data.js"></script>
+<script src="lib/js/app-view.js"></script>
+<script src="lib/js/app.js"></script>
+<!-- JS:CUSTOM -->
+<script>	
+</script>
+</body>
+</html>

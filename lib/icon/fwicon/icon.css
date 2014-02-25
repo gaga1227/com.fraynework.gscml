@@ -1,0 +1,38 @@
+@charset "utf-8";
+/* ----------------------------------------------------------------------------------- 
+   fwicon 
+   ----------------------------------------------------------------------------------- */
+@font-face {
+	font-family:"fwicon";
+	src:url('fwicon.ttf') format('truetype'),
+		url('fwicon.svg#fwicon') format('svg');
+	font-weight: normal;
+	font-style: normal; }
+
+/* ----------------------------------------------------------------------------------- 
+   fwicon styles
+   ----------------------------------------------------------------------------------- */
+[class^="fwicon-"]:before,
+[class*=" fwicon-"]:before {
+	/*display: inline-block;*/
+	font-family:'fwicon';
+	font-style:normal;
+	font-weight:normal;
+	text-align:center;
+	text-decoration:none; }
+/*  fwicon uses the Unicode Private Use Area (PUA) to ensure screen
+    readers do not read off random characters that represent icons */
+.fwicon-location:before             { content: "\e000"; }
+.fwicon-target:before               { content: "\e001"; }
+.fwicon-map:before             		{ content: "\e002"; }
+.fwicon-home:before                 { content: "\e003"; }
+.fwicon-info-inset:before           { content: "\e006"; }
+.fwicon-menu:before               	{ content: "\e004"; }
+.fwicon-search:before         		{ content: "\e005"; }
+.fwicon-chevron-up:before           { content: "\e007"; }
+.fwicon-chevron-right:before        { content: "\e008"; }
+.fwicon-chevron-left:before         { content: "\e009"; }
+.fwicon-chevron-down:before         { content: "\e00a"; }
+.fwicon-doc-binded:before           { content: "\e00b"; }
+.fwicon-contact-add:before          { content: "\e00c"; }
+/* \f020 doesn't work in Safari. all shifted one down */
